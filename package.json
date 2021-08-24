@@ -1,0 +1,54 @@
+{
+  "name": "project-osf3",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha tests/*.test.js",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@sentry/node": "^6.9.0",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.0.2",
+    "breadcrumb": "^1.0.0",
+    "chai-http": "^4.3.0",
+    "cookie-parser": "^1.4.5",
+    "debug": "~2.6.9",
+    "ejs": "^2.7.4",
+    "ejs2": "^2.1.0",
+    "express": "^4.16.4",
+    "express-session": "^1.17.2",
+    "http-errors": "~1.6.3",
+    "jwt-simple": "^0.5.6",
+    "mock-req-res": "^1.2.0",
+    "morgan": "~1.9.1",
+    "node-fetch": "^2.6.1",
+    "passport": "^0.4.1",
+    "passport-bearer-strategy": "^1.0.1",
+    "passport-http-bearer": "^1.0.1"
+  },
+  "devDependencies": {
+    "@jest-mock/express": "^1.4.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.3.4",
+    "jest": "^27.0.6",
+    "mocha": "^9.0.2",
+    "nyc": "^15.1.0",
+    "superagent": "^6.1.0",
+    "supertest": "^6.1.4"
+  },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
+  "engines": {
+    "node": "14.x"
+  },
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
