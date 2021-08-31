@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body class="m-5 pb-5">
+    <%- include includes/header.ejs -%>
+
+        <div class="Wishlist">
+            <hr>
+            <% if ( products==0){ %>
+                <h4>
+                    Your cart is empty.
+                </h4>
+            <%} else{ %>
+            <div>
+                <% for(var i=0; i < products.length; i++) { %>
+
+                    <div class="row d-flex justify-content-around">
+                        <div class="col-sm-5">
+                            <img src="../../images/<%= products[i].imgsrc %>" class="img-fluid" alt="Image not found">
+                        </div>
+                        <div class="col-sm-5">
+                            
+                                    <form action="removeWishlist" id="del-form" method="POST">
+                                        <h4>
+                                            <%= products[i].name %>
+                                        </h4>
+                                        <div class="form-group mt-2">
+                                            <input type="text" name="productid" id="productid" class="form-control"
+                                                value="<%=products[i].pid %>" hidden>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="text" name="variantid" id="variantid" class="form-control"
+                                                value="<%=products[i].variantid %>" hidden>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label>Color:</label>
+                                            <input type="text" name="color" id="color" class="form-control"
+                                                value="<%=products[i].color %>" readonly>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label>Size:</label>
+                                            <input type="text" name="size" id="size" class="form-control"
+                                                value="<%=products[i].size %>" readonly>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label>Quantity:</label>
+                                            <input type="text" name="quantity" id="quantity" class="form-control"
+                                                value="<%=products[i].quantity %>">
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label>Price:</label>
+                                            <input type="text" name="price" id="price" class="form-control"
+                                                value="<%=products[i].price %>" readonly>
+                                        </div>
+
+                                        <button class="btn btn-outline-danger mt-2" aria-disabled="true" type="submit"
+                                            form="del-form" formaction="removeWishlist" value="delete">Remove</button>
+                                        <button class="btn btn-outline-dark mt-2" aria-disabled="true" type="submit"
+                                            form="del-form" formaction="updateWishlist" value="update">Update</button>
+                                    </form>
+                                    <% } %>
+                        </div>
+                    </div>
+                    <hr>
+                    <% } %>
+            </div>
+            <% } %>
+
+
+            <%- include includes/footer.ejs -%>
+
+
+
+</body>
+
+</html>

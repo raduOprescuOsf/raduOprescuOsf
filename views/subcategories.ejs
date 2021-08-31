@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body class="m-5 pb-5">
+    <%- include includes/header.ejs -%>
+
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="../../../">Home</a></li>
+          <li class="breadcrumb-item"><a href="../../<%= gender %>"><%= gender %></a></li>
+          <li class="breadcrumb-item"><a href="../<%= parent%>"><%= parent%></a></li>
+          <li class="breadcrumb-item active" aria-current="page"><%= data[0].primary_category_id %></li>
+        </ul>
+    </nav>
+
+        <div class="Products">
+            <hr>
+            <div>
+                <% for(let i=0; i < data.length - 1; i++) { %>
+                    <div class="container">
+                        <div class="row d-flex justify-content-around">
+                            <div class="col-sm-3">
+                                <h3>
+                                    <%= data[i].page_title %>
+                                </h3>
+                            </div>
+                            <div class="col-sm-3">
+                                <h3>
+                                    <%= data[i].page_title %>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="row d-flex justify-content-around">
+                                    <div class="col-sm-6">
+                                        <img src="../../../images/<%= data[i].image_groups[0].images[0].link %>"
+                                            class="img-fluid" alt="Image not found">
+
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <p>
+                                            <%= data[i].page_description %>
+                                        </p>
+                                        <a href="/categories/<%= data[i].primary_category_id %>/<%= data[i].id %>"
+                                            class="btn btn-success" role="button"
+                                            aria-disabled="true">Details </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <% if(i+1<data.length){ %>
+                                <% i++; %>
+                                    <div class="col-sm-5">
+                                        <div class="row d-flex justify-content-around">
+                                            <div class="col-sm-6">
+                                                <img src="../../../images/<%= data[i].image_groups[0].images[0].link %>"
+                                                    class="img-fluid" alt="Image not found">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p>
+                                                    <%= data[i].page_description %>
+                                                </p>
+                                                <a href="/categories/<%= data[i].primary_category_id %>/<%= data[i].id %>"
+                                                    class="btn btn-success" role="button"
+                                                    aria-disabled="true">Details </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <% } %>
+
+                                        <div class="w-100"></div>
+                        </div>
+                    </div>
+
+
+                    <hr>
+                    <% } %>
+            </div>
+
+
+
+            <%- include includes/footer.ejs -%>
+
+    
+</body>
+
+</html>

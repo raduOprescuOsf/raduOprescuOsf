@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+<!-- function to get the product and variant id to be able to pass them to the cart -->
+    <script>
+        function codeAddress() {
+            const btnClick = function () {
+                
+                this.parentNode.getElementsByClassName("active")[0].classList.remove("active");
+                this.classList.add("active");
+
+                let color = this.innerText;
+                let color_code = "";
+                const data = JSON.parse(document.getElementById('variableJSON').innerHTML);
+                document.getElementById("productid").value = data[0].id;
+
+                for (let i = 0; i < data[0].variation_attributes.length; i++) {
+                    for (let j = 0; j < data[0].variation_attributes[i].values.length; j++) {
+                        if (data[0].variation_attributes[i].values[j].name == color) {
+                            color_code = data[0].variation_attributes[i].values[j].value;
+                        }
+                    }
+                }
+                let link = "";
+                for (let i = 0; i < data[0].image_groups.length - 1; i++) {
+                    if (data[0].image_groups[i].variation_value == color_code && data[0].image_groups[i].view_type == "large") {
+                        link = data[0].image_groups[i].images[0].link;
+                        break;
+                    }
+                }
+                document.getElementById("img-product").src = "../../images/".concat(link);
+
+
+                let size = "";
+                let width = "";
+                let variantid = "";
+                let size_code = "";
+                if (document.getElementsByClassName("active").length == 1) {
+                    for (let i = 0; i < data[0].variants.length; i++) {
+                        if (data[0].variants[i].variation_values.color == color_code) {
+                            variantid = data[0].variants[i].product_id;
+                            break;
+                        }
+                    }
+                    document.getElementById("color").value = color_code;
+                    document.getElementById("variantid").value = variantid;
+
+                } else {
+                    if (document.getElementsByClassName("active").length > 2) {
+                        size = document.getElementsByClassName("active")[1].innerText;
+                        width = document.getElementsByClassName("active")[2].innerText;
+
+                        for (let j = 0; j < data[0].variation_attributes[1].values.length; j++) {
+                            if (data[0].variation_attributes[1].values[j].name == size) {
+                                size_code = data[0].variation_attributes[1].values[j].value;
+                            }
+                        }
+
+
+                        for (let i = 0; i < data[0].variants.length; i++) {
+                            if ((data[0].variants[i].variation_values.color == color_code) &&
+                                (data[0].variants[i].variation_values.size == size_code) &&
+                                (data[0].variants[i].variation_values.width == width)) {
+                                variantid = data[0].variants[i].product_id;
+                                break;
+                            }
+                        }
+
+                        document.getElementById("color").value = color_code;
+                        document.getElementById("size").value = size_code;
+                        document.getElementById("width").value = width;
+                        document.getElementById("variantid").value = variantid;
+
+                    } else {
+                        size = document.getElementsByClassName("active")[1].innerText;
+
+                        
+                        for (let j = 0; j < data[0].variation_attributes[1].values.length; j++) {
+                            if (data[0].variation_attributes[1].values[j].name == size) {
+                                size_code = data[0].variation_attributes[1].values[j].value;
+                            }
+                        }
+
+                        for (let i = 0; i < data[0].variants.length; i++) {
+                            if ((data[0].variants[i].variation_values.color == color_code) &&
+                                (data[0].variants[i].variation_values.size == size_code)) {
+                                variantid = data[0].variants[i].product_id;
+                                break;
+                            }
+                        }
+                        document.getElementById("color").value = color_code;
+                        document.getElementById("size").value = size_code;
+                        document.getElementById("variantid").value = variantid;
+                    }
+                }
+            };
+            document.querySelectorAll(".btn-group2 .btn2").forEach(btn => btn.addEventListener('click', btnClick));
+        }
+
+        window.onload = codeAddress;
+    </script>
+</head>
+
+
+<body onload="codeAddress()" class="m-5 pb-5">
+    <%- include includes/header.ejs -%>
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../../">Home</a></li>
+                <li class="breadcrumb-item"><a href="../<%= gender %>">
+                        <%= gender %>
+                    </a></li>
+                <li class="breadcrumb-item"><a href="../<%= gender%>/<%=parent %>">
+                        <%= parent %>
+                    </a></li>
+                <li class="breadcrumb-item"><a href="../<%= gender%>/<%=parent %>/<%= data[0].primary_category_id %>">
+                        <%= data[0].primary_category_id %>
+                    </a></li>
+                <li class="breadcrumb-item" aria-current="page">
+                    <%= data[0].name %>
+                </li>
+            </ul>
+        </nav>
+
+        <span id='variableJSON' hidden>
+            <%= JSON.stringify(data); %>
+        </span>
+
+        <span id='product_id' hidden>
+            <%= data[0].id %>
+        </span>
+
+        <div>
+            <h4>
+                <%= data[0].name %>
+            </h4>
+            <div class="row d-flex justify-content-around">
+                <div class="col-sm-5">
+                    <h4>
+                        <img id='img-product' src="../../images/<%= data[0].image_groups[0].images[0].link %>"
+                            class="img-fluid" alt="Image not found">
+                    </h4>
+                </div>
+                <div class="col-sm-5 ">
+                    <p>
+                        <%= data[0].long_description %>
+                    </p>
+                    <p>
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <form action="addProduct" id="buy-form" method="POST">
+                                <div class="form-group mt-2">
+                                    <input type="text" name="color" id="color" class="form-control" hidden>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" name="size" id="size" class="form-control" hidden>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" name="variantid" id="variantid" class="form-control" hidden>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" name="width" id="width" class="form-control" hidden>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" name="productid" id="productid" class="form-control" hidden>
+                                </div>
+                                <button name='add' class="btn btn-info btn-lg" aria-disabled="true" type="submit"
+                                    form="buy-form">Buy now
+                                </button>
+                            </form>
+                            <form action="addWishlist" id="wishlist-form" method="POST">
+                                <div class="form-group mt-2">
+                                    <input type="text" name="color" id="color" class="form-control" hidden>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" name="size" id="size" class="form-control" hidden>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" name="variantid" id="variantid" class="form-control" hidden>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" name="width" id="width" class="form-control" hidden>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" name="productid" id="productid" class="form-control" hidden>
+                                </div>
+                                <button name='add' class="btn btn-info btn-lg" aria-disabled="true" type="submit"
+                                    form="wishlist-form">Add to wishlist
+                                </button>
+                            </form>
+                        </div>
+                        <div class="p-2">
+                            Price: $<%= data[0].price %>
+                        </div>
+                    </div>
+                    </p>
+                </div>
+            </div>
+            <div class="row d-flex ">
+                <h2>Product costumized</h2>
+                <% for(let i=0; i < data[0].variation_attributes.length; i++) { %>
+                    <p class="mt-2 ">
+                        <%= data[0].variation_attributes[i].name %>:
+                    </p>
+                    <div class="btn-group2">
+                        <button class="btn2 active">
+                            <%= data[0].variation_attributes[i].values[0].name %>
+                        </button>
+                        <% for(let j=1; j < data[0].variation_attributes[i].values.length; j++) { %>
+                            <button class="btn2">
+                                <%= data[0].variation_attributes[i].values[j].name %>
+                            </button>
+                            <% } %>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+
+
+
+
+
+</body>
+
+</html>

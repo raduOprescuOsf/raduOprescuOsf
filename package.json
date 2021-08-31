@@ -20,6 +20,7 @@
     "ejs2": "^2.1.0",
     "express": "^4.16.4",
     "express-session": "^1.17.2",
+    "heroku": "^7.59.0",
     "http-errors": "~1.6.3",
     "jwt-simple": "^0.5.6",
     "mock-req-res": "^1.2.0",

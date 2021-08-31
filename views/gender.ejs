@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+    <head> 
+        <title>
+            <%= title%>
+        </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head> 
+    
+    <body class="m-5 pb-5">
+        <%- include includes/header.ejs -%>
+
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="../">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><%= gender %></li>
+            </ul>
+        </nav>
+
+        <h2>Categories</h2>
+        <hr>
+        <div>
+            <% for(let i=0; i < data.length; i++){ %>
+                <img src="../images/<%= data[i].image %>"  class="img-fluid" alt="Image">
+                <h4>
+                    <%= data[i].name %>
+                </h4>
+                <p>
+                    <%= data[i].page_description%>
+                </p>
+                <a href="/categories/<%= data[i].parent_category_id %>/<%= data[i].id%>"class="btn btn-success"role="button"  aria-disabled="true"> 
+                    View products
+                </a>
+                <hr>
+                <% } %>
+        </div>
+
+        <%- include includes/footer.ejs -%>
+
+    </body>
+</html>
