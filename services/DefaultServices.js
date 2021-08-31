@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 const RestAPIURL = "https://osf-digital-backend-academy.herokuapp.com/api/";
-const secretKey ="$2a$08$ZlZQAmpSHsaFFKcdnkDpCugCICxR/DnMCehnaoE5OfXfxVcyJ4FNu";
+const secretKey = "$2a$08$ZlZQAmpSHsaFFKcdnkDpCugCICxR/DnMCehnaoE5OfXfxVcyJ4FNu";
 
-/* GET home page
+/* will get home page
 we are not passing the function any argument since it is not depending to any
 */
 async function getHome(){
@@ -12,7 +12,7 @@ async function getHome(){
     return res.data;
 }
 
-/* GET gender pages depending(men or a woman)
+/* will get gender pages depending(men or a woman)
 this function will require a parameter to know the gender the person will search products for
 */
 
@@ -22,7 +22,7 @@ async function getGender(gender){
     return res.data;
 }
 
-/* GET categories depending on the parent id
+/* will get categories depending on the parent id
 this function will use the parent_id)
 */
 
@@ -32,7 +32,7 @@ async function getCategories(parent_id){
     return res.data;
 }
 
-/* GET list of products using a category 
+/* will get list of products using a category 
 function will use the category paramenter for the URL template
 */
 

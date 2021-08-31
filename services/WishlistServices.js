@@ -3,12 +3,8 @@ const axios = require('axios');
 const RestAPIURL = "https://osf-digital-backend-academy.herokuapp.com/api/";
 const secretKey = "$2a$08$ZlZQAmpSHsaFFKcdnkDpCugCICxR/DnMCehnaoE5OfXfxVcyJ4FNu";
 
-/*
-    will get the cart from api using a token
-*/
-
-async function getCart(token) {
-    const URL = `${RestAPIURL}cart?secretKey=${secretKey}`;
+async function getWishlist(token) {
+    const URL = `${RestAPIURL}wishlist?secretKey=${secretKey}`;
     try {
         const res = await axios.get(URL, {
             headers: {
@@ -22,19 +18,15 @@ async function getCart(token) {
 
 }
 
-// will get a selcted product using it's id 
-
 async function getProduct(productID) {
     const URL = `${RestAPIURL}/products/product_search?id=${productID}&secretKey=${secretKey}`;
     const res = await axios.get(URL);
     return res.data;
 }
 
-// will add a product to the cart using it's id, variant and quantity(we will use a constructor to define the product)
-// token is used to remeber the user that added the product to it's specific cart
 
-async function addProduct(productId, variantId, quantity, token) {
-    const URL = `${RestAPIURL}cart/addItem`;
+async function addWishedProduct(productId, variantId, quantity, token) {
+    const URL = `${RestAPIURL}wishlist/addItem`;
     try {
         const product = {
             "productId": productId,
@@ -53,10 +45,10 @@ async function addProduct(productId, variantId, quantity, token) {
     }
 }
 
-// remove an item that was selcted from the cart 
 
-async function removeProduct(productId, variantId,token) {
-    const URL = `${RestAPIURL}cart/removeItem`;
+
+async function removeWishedProduct(productId, variantId,token) {
+    const URL = `${RestAPIURL}wishlist/removeItem`;
     try {
         const product = {
             "productId": productId,
@@ -75,8 +67,9 @@ async function removeProduct(productId, variantId,token) {
     }
 }
 
-async function updateQuantity(productId, variantId, quantity, token) {
-    const URL = `${RestAPIURL}cart/changeItemQuantity`;
+
+async function updateWishedQuantity(productId, variantId, quantity, token) {
+    const URL = `${RestAPIURL}wishlist/changeItemQuantity`;
     try {
         const product = {
             "productId": productId,
@@ -97,9 +90,9 @@ async function updateQuantity(productId, variantId, quantity, token) {
 
 
 module.exports = {
-    getCart: getCart,
+    getWishlist: getWishlist,
     getProduct: getProduct,
-    addProduct: addProduct,
-    removeProduct: removeProduct,
-    updateQuantity: updateQuantity
+    addWishedProduct: addWishedProduct,
+    removeWishedProduct: removeWishedProduct,
+    updateWishedQuantity: updateWishedQuantity
 }

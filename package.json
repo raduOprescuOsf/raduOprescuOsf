@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "test": "mocha tests/*.test.js",
+    "test": "mocha testing/UnitTesting.test.js",
     "lint": "eslint ."
   },
   "dependencies": {
-    "@sentry/node": "^6.9.0",
+    "@sentry/node": "^6.11.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.0.2",

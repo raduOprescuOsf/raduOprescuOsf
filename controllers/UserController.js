@@ -2,9 +2,11 @@ const userServices = require('../services/UserServices');
 
 let session = "";
 
+/*
+    functions will render the specific pages and will use information from requsets to create a new user or to verify if the user exists
+*/
 
 async function getAuthentification(req, res){
-    //console.log(req.body);
     res.render('signIn.ejs', {title: "Alibazon", session: session.userid});
 
 }
@@ -25,7 +27,7 @@ async function signUp(req, res, next){
             res.send("Invalid user or password");
         }
     }else{
-        const err = new Error("Name, email and password required! Bad request!");
+        const err = new Error("Name, email and password required!");
         err.status = 400;
         next(err);
     }
@@ -70,6 +72,7 @@ async function getProfile(req, res, next) {
     }
 }
 
+// the function will destroy the session and will get you to the homepage
 
 function signOut(req, res) {
     req.session.destroy();
